@@ -6,8 +6,14 @@ Widget buildErrorWidget(String error) {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Text(error,
-            style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold))
+        Text(
+          error,
+          style: TextStyle(
+            fontSize: 12.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        )
       ],
     ),
   );

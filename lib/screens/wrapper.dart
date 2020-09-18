@@ -18,7 +18,7 @@ class _WrapperScreenState extends State<WrapperScreen> {
   void initState() {
     super.initState();
     _wrapperBloc = WrapperBloc();
-    _wrapperBloc.userIsLogged();
+    _wrapperBloc..userIsLogged();
   }
 
   @override
@@ -33,12 +33,10 @@ class _WrapperScreenState extends State<WrapperScreen> {
 
           case WrapperItem.LOGIN:
             return LoginScreen();
-
-          default:
-            return Scaffold(
-              body: buildScreenLoadingWidget(1),
-            );
         }
+        return Scaffold(
+          body: buildScreenLoadingWidget(1),
+        );
       },
     );
   }

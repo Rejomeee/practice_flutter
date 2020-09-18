@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:igdb_app/screens/wrapper.dart';
+import 'package:igdb_app/services/router/router.gr.dart';
 import 'package:igdb_app/services/shared_preferences.dart';
 import 'package:igdb_app/widgets/wiredash.dart';
 import 'package:wiredash/wiredash.dart';
@@ -17,12 +18,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Wiredash(
       navigatorKey: _navigatorKey,
-      projectId: 'flutter_base-zyz2lli',
-      secret: 'aqry2m8cdmqsk3z3j6u16u25i2noxmdl',
+      projectId: 'flutter_app-ors0eew',
+      secret: '5q12tkw8xojogcf68t60ma7xha2en42k',
       theme: WiredashThemeData(
         brightness: Brightness.light,
       ),
-      translation: WiredashCustomTranslation(),
+      options: WiredashOptionsData(
+        showDebugFloatingEntryPoint: false,
+        customTranslations: {
+          const Locale.fromSubtags(): const WiredashCustomTranslation()
+        },
+      ),
+      // translation: WiredashCustomTranslation(),
       child: MaterialApp(
         navigatorKey: _navigatorKey,
         title: 'Flutter Demo',
@@ -37,12 +44,15 @@ class MyApp extends StatelessWidget {
           // Notice that the counter didn't reset back to zero; the application
           // is not restarted.
           primarySwatch: Colors.blue,
+          backgroundColor: Color(0xFF212121),
           // This makes the visual density adapt to the platform that you run
           // the app on. For desktop platforms, the controls will be smaller and
           // closer together (more dense) than on mobile platforms.
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: WrapperScreen(),
+        // home: WrapperScreen(),
+        onGenerateRoute: (settings) => Router.onGenerateRoute(settings),
+        initialRoute: "/wrapper",
       ),
     );
   }

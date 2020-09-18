@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:igdb_app/services/shared_preferences.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 enum WrapperItem { HOME, LOGIN }
 
@@ -26,8 +25,6 @@ class WrapperBloc {
   void userIsLogged() async {
     UserPreferences _prefs = UserPreferences();
     String isLogged = await _prefs.getData('userLogged');
-    print('isLogged');
-    print(isLogged);
     if (isLogged != '')
       showHome();
     else

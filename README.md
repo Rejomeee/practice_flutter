@@ -20,3 +20,7 @@ samples, guidance on mobile development, and a full API reference.
 Read:
 
 - Added Wiredash for users feedback# practice_flutter
+
+
+Commands: 
+- flutter pub run build_runner watch --delete-conflicting-outputs
