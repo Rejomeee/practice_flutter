@@ -21,12 +21,13 @@ class MyApp extends StatelessWidget {
       projectId: 'flutter_app-ors0eew',
       secret: '5q12tkw8xojogcf68t60ma7xha2en42k',
       theme: WiredashThemeData(
-        brightness: Brightness.light,
+        brightness: Brightness.dark,
       ),
       options: WiredashOptionsData(
         showDebugFloatingEntryPoint: false,
         customTranslations: {
-          const Locale.fromSubtags(): const WiredashCustomTranslation()
+          const Locale.fromSubtags(languageCode: 'en'):
+              const WiredashCustomTranslation()
         },
       ),
       // translation: WiredashCustomTranslation(),

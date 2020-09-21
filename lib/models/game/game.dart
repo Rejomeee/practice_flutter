@@ -1,5 +1,6 @@
 import 'game_models/cover.dart';
 import 'game_models/genre.dart';
+import 'game_models/keywords.dart';
 import 'game_models/mode.dart';
 import 'game_models/player_perspective.dart';
 import 'game_models/screenshot.dart';
@@ -11,6 +12,7 @@ class GameModel {
   final int createdAt;
   final int firstRelease;
   final List<ModeModel> modes;
+  final List<KeywordsModel> keywords;
   final List<GenreModel> genres;
   final List<PlayerPerspectiveModel> perspectives;
   final double popularity;
@@ -20,6 +22,7 @@ class GameModel {
   final double rating;
   final int rating_count;
   final String name;
+  final String storyline;
 
   GameModel(
     this.id,
@@ -36,6 +39,8 @@ class GameModel {
     this.rating,
     this.name,
     this.rating_count,
+    this.keywords,
+    this.storyline,
   );
 
   GameModel.fromJson(Map<String, dynamic> json)
@@ -44,6 +49,11 @@ class GameModel {
             json["cover"] == null ? null : CoverModel.fromJson(json["cover"]),
         createdAt = json["created_at"],
         firstRelease = json['first_release_date'],
+        keywords = json["keywords"] == null
+            ? null
+            : (json["keywords"] as List)
+                .map((i) => KeywordsModel.fromjson(i))
+                .toList(),
         modes = json["game_modes"] == null
             ? null
             : (json["game_modes"] as List)
@@ -71,5 +81,6 @@ class GameModel {
                 .toList(),
         rating = json["rating"],
         rating_count = json["rating_count"],
-        name = json['name'];
+        name = json['name'],
+        storyline = json['storyline'];
 }

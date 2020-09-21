@@ -145,7 +145,6 @@ class _MainScreenState extends State<MainScreen> {
           },
           children: <Widget>[
             Container(
-              // height: MediaQuery.of(context).size.height,
               decoration: BoxDecoration(
                 color: Color(0xFF212121),
               ),

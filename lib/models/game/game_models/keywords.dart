@@ -1,11 +1,11 @@
-class ModeModel {
+class KeywordsModel {
   final int id;
   final String name;
   final String slug;
 
-  ModeModel(this.id, this.name, this.slug);
+  KeywordsModel(this.id, this.name, this.slug);
 
-  ModeModel.fromjson(Map<String, dynamic> json)
+  KeywordsModel.fromjson(Map<String, dynamic> json)
       : id = json["id"],
         name = json["name"],
         slug = json["slug"];
