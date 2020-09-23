@@ -43,6 +43,45 @@ class GameModel {
     this.storyline,
   );
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = id;
+
+    if (cover != null) {
+      data['cover'] = cover.toJson();
+    }
+
+    data['createdAt'] = createdAt;
+    data['firstRelease'] = firstRelease;
+
+    if (modes != null) {
+      data['game_modes'] = modes.map((v) => v.toJson()).toList();
+    }
+    if (genres != null) {
+      data['genres'] = genres.map((v) => v.toJson()).toList();
+    }
+    if (perspectives != null) {
+      data['perspectives'] = perspectives.map((v) => v.toJson()).toList();
+    }
+
+    data['popularity'] = popularity;
+
+    if (screenshots != null) {
+      data['screenshots'] = screenshots.map((v) => v.toJson()).toList();
+    }
+
+    data['summary'] = summary;
+    if (videos != null) {
+      data['videos'] = videos.map((v) => v.toJson()).toList();
+    }
+    data['rating'] = rating;
+    data['name'] = name;
+    data['rating_count'] = rating_count;
+    data['keywords'] = keywords;
+    data['storyline'] = storyline;
+    return data;
+  }
+
   GameModel.fromJson(Map<String, dynamic> json)
       : id = json["id"],
         cover =

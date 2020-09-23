@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -62,14 +64,15 @@ class _HomePopularListState extends State<HomePopularList> {
                   child: GestureDetector(
                     onTap: () {
                       print(games[index].screenshots[0].imageId);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HomeViewGameDetailsScreen(
-                            game: games[index],
-                          ),
-                        ),
-                      );
+                      getGamesBloc..clickedGame(games[index]);
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => HomeViewGameDetailsScreen(
+                      //       game: games[index],
+                      //     ),
+                      //   ),
+                      // );
                     },
                     child: Container(
                       width: 120,

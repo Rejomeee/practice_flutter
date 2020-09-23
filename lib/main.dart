@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:igdb_app/screens/wrapper.dart';
 import 'package:igdb_app/services/router/router.gr.dart';
+// import 'package:igdb_app/services/router/router.gr.dart';
 import 'package:igdb_app/services/shared_preferences.dart';
 import 'package:igdb_app/widgets/wiredash.dart';
 import 'package:wiredash/wiredash.dart';
@@ -14,6 +16,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   final _navigatorKey = GlobalKey<NavigatorState>();
+  // final _navigatorKey = Router.navigatorKey;
   @override
   Widget build(BuildContext context) {
     return Wiredash(
@@ -34,26 +37,23 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         navigatorKey: _navigatorKey,
         title: 'Flutter Demo',
-        theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // Try running your application with "flutter run". You'll see the
-          // application has a blue toolbar. Then, without quitting the app, try
-          // changing the primarySwatch below to Colors.green and then invoke
-          // "hot reload" (press "r" in the console where you ran "flutter run",
-          // or simply save your changes to "hot reload" in a Flutter IDE).
-          // Notice that the counter didn't reset back to zero; the application
-          // is not restarted.
-          primarySwatch: Colors.blue,
-          backgroundColor: Color(0xFF212121),
-          // This makes the visual density adapt to the platform that you run
-          // the app on. For desktop platforms, the controls will be smaller and
-          // closer together (more dense) than on mobile platforms.
-          visualDensity: VisualDensity.adaptivePlatformDensity,
+        // theme: ThemeData(
+        //   primarySwatch: Colors.blue,
+        //   backgroundColor: Color(0xFF212121),
+        //   visualDensity: VisualDensity.adaptivePlatformDensity,
+        // ),
+        builder: ExtendedNavigator.builder(
+          router: Router(),
+          builder: (context, extendedNav) => Theme(
+            data: ThemeData.light(),
+            child: extendedNav,
+          ),
         ),
         // home: WrapperScreen(),
-        onGenerateRoute: (settings) => Router.onGenerateRoute(settings),
-        initialRoute: "/wrapper",
+        onGenerateRoute: Router(),
+        // initialRoute: '/',
+        // onGenerateRoute: (settings) => Router.onGenerateRoute(settings),
+        // initialRoute: "/wrapper",
       ),
     );
   }

@@ -9,4 +9,10 @@ class VideoModel {
       : id = json["id"],
         name = json["name"],
         videoId = json["video_id"];
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'video_id': videoId,
+      };
 }

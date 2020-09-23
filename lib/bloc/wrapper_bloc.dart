@@ -1,5 +1,8 @@
 import 'dart:async';
 
+import 'package:igdb_app/repository/Api/getAuthToken.dart';
+import 'package:igdb_app/services/push_notification.dart';
+// import 'package:igdb_app/services/router/router.gr.dart';
 import 'package:igdb_app/services/shared_preferences.dart';
 
 enum WrapperItem { HOME, LOGIN }
@@ -24,14 +27,20 @@ class WrapperBloc {
 
   void userIsLogged() async {
     UserPreferences _prefs = UserPreferences();
+
     String isLogged = await _prefs.getData('userLogged');
+    // if (await _prefs.getData('dt') == '' && await _prefs.getData('di') == '')
+    // getAuthToken()
+    PushNotificationsManager().init();
+
     if (isLogged != '')
       showHome();
+    // Router.navigatorKey.currentState.popAndPushNamed('/home');
+    // Router.navigatorKey.currentState.pushReplacementNamed("/home");
     else
+      // Router.navigatorKey.currentState.popAndPushNamed('/login');
+      // Router.navigatorKey.currentState.pushReplacementNamed("/login");
       showLogin();
-    // int counter = (prefs.getBool('counter') ?? 0) + 1;
-    // print('Pressed $counter times.');
-    // await prefs.setInt('counter', counter);
   }
 
   close() {

@@ -5,7 +5,13 @@ class CoverModel {
   final String imageId;
   final String url;
 
-  CoverModel(this.id, this.height, this.width, this.imageId, this.url);
+  CoverModel(
+    this.id,
+    this.height,
+    this.width,
+    this.imageId,
+    this.url,
+  );
 
   CoverModel.fromJson(Map<String, dynamic> json)
       : id = json["id"],
@@ -13,4 +19,12 @@ class CoverModel {
         width = json["width"],
         imageId = json["image_id"],
         url = json["url"];
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'height': height,
+        'width': width,
+        'imageId': imageId,
+        'url': url,
+      };
 }

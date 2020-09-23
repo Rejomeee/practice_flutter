@@ -42,14 +42,19 @@ dependencies:
   shared_preferences: ^0.5.10
   email_validator: ^1.0.5 # for validating email formats
   wiredash: ^0.2.0 # for application feedback console. check on wiredash.io
-  auto_route: ^0.2.2
+  auto_route: ^0.6.7
   flutter_chips_input: ^1.9.4
+  firebase_messaging: ^6.0.16 # to get a device token from firebase, and use for push notification
+  device_id: ^0.2.0 # to get the unique device id
+  device_info: ^0.4.0+4
+  dio: ^3.0.10
+  connectivity: ^0.4.8+2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^1.0.0
-  auto_route_generator: ^0.2.2
+  build_runner: 
+  auto_route_generator: ^0.6.7
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

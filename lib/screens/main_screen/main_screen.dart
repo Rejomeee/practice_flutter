@@ -7,6 +7,7 @@ import 'package:igdb_app/elements/circular_img_element.dart';
 import 'package:igdb_app/screens/login_screen/components/login_body.dart';
 import 'package:igdb_app/screens/login_screen/login_screen.dart';
 import 'package:igdb_app/screens/main_screen/components/home_body.dart';
+import 'package:igdb_app/screens/wrapper.dart';
 import 'package:igdb_app/widgets/home_popular_list.dart';
 import 'package:igdb_app/widgets/wiredash.dart';
 
@@ -101,7 +102,7 @@ class _MainScreenState extends State<MainScreen> {
                 _authBloc..logOut();
                 Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                    MaterialPageRoute(builder: (context) => WrapperScreen()),
                     (route) => false);
               },
               child: ListTile(

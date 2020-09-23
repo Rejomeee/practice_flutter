@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:igdb_app/bloc/auth_bloc.dart';
 import 'package:igdb_app/elements/rounded_buttons.dart';
@@ -5,6 +6,7 @@ import 'package:igdb_app/elements/rounded_input_field.dart';
 import 'package:igdb_app/elements/rounded_password_field.dart';
 import 'package:igdb_app/screens/login_screen/components/login_bg.dart';
 import 'package:igdb_app/screens/main_screen/main_screen.dart';
+// import 'package:igdb_app/services/router/router.gr.dart';
 import 'package:igdb_app/widgets/wiredash.dart';
 
 class LoginBody extends StatefulWidget {
@@ -110,12 +112,8 @@ class _LoginBodyState extends State<LoginBody> {
                           press: () {
                             loginBloc
                               ..submit().then(
-                                (value) => Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            MainScreen()),
-                                    (route) => false),
+                                (value) => ExtendedNavigator.root
+                                    .popAndPush('/main-screen'),
                               );
                           },
                           // if email and password is true OR loading is false
