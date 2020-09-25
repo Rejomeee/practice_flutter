@@ -1,9 +1,16 @@
+import 'package:badges/badges.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:igdb_app/bloc/auth_bloc.dart';
+import 'package:igdb_app/bloc/get_user_details.dart';
+import 'package:igdb_app/bloc/home_notif_bloc.dart';
 import 'package:igdb_app/elements/circular_img_element.dart';
+import 'package:igdb_app/elements/custom_dialog.dart';
+import 'package:igdb_app/elements/error_element.dart';
+import 'package:igdb_app/elements/loader_element.dart';
+import 'package:igdb_app/models/app/app_models/user_details.dart';
 import 'package:igdb_app/screens/login_screen/components/login_body.dart';
 import 'package:igdb_app/screens/login_screen/login_screen.dart';
 import 'package:igdb_app/screens/main_screen/components/home_body.dart';
@@ -22,6 +29,7 @@ class _MainScreenState extends State<MainScreen> {
   final _wiredashConsole = WiredashConsole();
   PageController _pageController;
   AuthBloc _authBloc;
+  HomeNotifBloc _homeNotifBloc;
   GlobalKey bottomNavigationKey = GlobalKey();
 
   int _currentIndex = 0;
@@ -31,6 +39,8 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
     _pageController = PageController();
     _authBloc = AuthBloc();
+    _homeNotifBloc = HomeNotifBloc();
+    getUserDetailsBloc..getUserDetails();
   }
 
   @override
@@ -51,42 +61,18 @@ class _MainScreenState extends State<MainScreen> {
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: <Widget>[
-            DrawerHeader(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                decoration: BoxDecoration(color: Color(0xFF212121)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CircularImage(
-                          NetworkImage(
-                              'https://celebritypets.net/wp-content/uploads/2016/12/Adriana-Lima.jpg'),
-                          width: 75,
-                          height: 75,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 12.0),
-                          child: Text(
-                            'Jolina Magdangal',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              decoration: BoxDecoration(
-                color: Color(0xFF212121),
-              ),
+            StreamBuilder(
+              stream: getUserDetailsBloc.userDetails.stream,
+              builder: (context, AsyncSnapshot<UserDetails> snapshot) {
+                if (snapshot.hasData) {
+                  return _buildDrawerHeader(
+                      snapshot.data, MediaQuery.of(context).size);
+                } else if (snapshot.hasError) {
+                  return buildErrorWidget(snapshot.error);
+                } else {
+                  return buildScreenLoadingWidget(0);
+                }
+              },
             ),
             GestureDetector(
               onTap: () => _wiredashConsole.build(context),
@@ -99,11 +85,29 @@ class _MainScreenState extends State<MainScreen> {
             ),
             GestureDetector(
               onTap: () {
-                _authBloc..logOut();
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => WrapperScreen()),
-                    (route) => false);
+                showGeneralDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  barrierLabel: MaterialLocalizations.of(context)
+                      .modalBarrierDismissLabel,
+                  barrierColor: Colors.black45,
+                  transitionDuration: const Duration(milliseconds: 200),
+                  pageBuilder: (BuildContext buildContext, Animation animation,
+                          Animation secondaryAnimation) =>
+                      CustomDialog(
+                    title: "Logging out",
+                    description: "Are you sure you want to logout?",
+                    confirmBtnTxt: 'Logout',
+                    confirmBtnFnc: () {
+                      _authBloc..logOut();
+                    },
+                  ),
+                );
+                // _authBloc..logOut();
+                // Navigator.pushAndRemoveUntil(
+                //     context,
+                //     MaterialPageRoute(builder: (context) => WrapperScreen()),
+                //     (route) => false);
               },
               child: ListTile(
                 title: Text("Logout"),
@@ -127,14 +131,21 @@ class _MainScreenState extends State<MainScreen> {
         ),
         actions: <Widget>[
           Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {},
+            padding: EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () {},
+              child: Badge(
+                position: BadgePosition.topRight(top: 0),
+                badgeContent: Text(''),
+                animationDuration: Duration(milliseconds: 5000),
+                animationType: BadgeAnimationType.slide,
                 child: Icon(
-                  Icons.search,
-                  size: 26.0,
+                  SimpleLineIcons.bell, // add custom icons also
                 ),
-              )),
+                showBadge: false,
+              ),
+            ),
+          ),
         ],
       ),
       body: SizedBox.expand(
@@ -145,36 +156,36 @@ class _MainScreenState extends State<MainScreen> {
             setState(() => _currentIndex = index);
           },
           children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                color: Color(0xFF212121),
-              ),
-              child: Column(
-                children: <Widget>[
-                  HomeBody(),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 20.0, top: 15.0, bottom: 10.0),
-                    child: Row(
-                      children: [
-                        Text(
-                          'Popular games right now'.toUpperCase(),
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white.withOpacity(0.3),
-                              fontWeight: FontWeight.bold),
-                        )
-                      ],
+            SingleChildScrollView(
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                decoration: BoxDecoration(
+                  color: Color(0xFF212121),
+                ),
+                child: Column(
+                  children: <Widget>[
+                    HomeBody(),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 20.0, top: 15.0, bottom: 10.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Popular games right now'.toUpperCase(),
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white.withOpacity(0.3),
+                                fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  // HomePopularList()
-                  SizedBox(
-                    height: 210,
-                    child: HomePopularList(),
-                  )
-                  // Container(
-                  //     height: 200.0, child: Expanded(child: HomePopularList())),
-                ],
+                    SizedBox(
+                      height: 210,
+                      child: HomePopularList(),
+                    )
+                  ],
+                ),
               ),
             ),
             Container(
@@ -288,4 +299,61 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
   }
+}
+
+Widget _buildDrawerHeader(UserDetails user, size) {
+  return DrawerHeader(
+    child: Container(
+      width: size.width,
+      height: size.height,
+      decoration: BoxDecoration(color: Color(0xFF212121)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularImage(
+                NetworkImage(
+                    'https://celebritypets.net/wp-content/uploads/2016/12/Adriana-Lima.jpg'
+                    // '${user.profilePicUrl}',
+                    ),
+                width: 75,
+                height: 75,
+              ),
+              // CachedNetworkImage(
+              //   imageUrl:
+              //       'https://pbs.twimg.com/profile_images/945853318273761280/0U40alJG_400x400.jpg',
+              //   imageBuilder: (context, imageProvider) => Container(
+              //     width: 75.0,
+              //     height: 75.0,
+              //     decoration: BoxDecoration(
+              //       shape: BoxShape.circle,
+              //       image: DecorationImage(
+              //           image: imageProvider, fit: BoxFit.cover),
+              //     ),
+              //   ),
+              //   placeholder: (context, url) => CircularProgressIndicator(),
+              //   errorWidget: (context, url, error) => Icon(Icons.error),
+              // ),
+              Padding(
+                padding: const EdgeInsets.only(top: 12.0),
+                child: Text(
+                  '${user.userFirstName} ${user.userLastName}',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    ),
+    decoration: BoxDecoration(
+      color: Color(0xFF212121),
+    ),
+  );
 }

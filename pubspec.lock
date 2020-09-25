@@ -43,6 +43,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.8"
+  badges:
+    dependency: "direct main"
+    description:
+      name: badges
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.1"
   bloc:
     dependency: "direct main"
     description:
@@ -321,6 +328,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.9.4"
+  flutter_local_notifications:
+    dependency: "direct main"
+    description:
+      name: flutter_local_notifications
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.4.4+4"
+  flutter_local_notifications_platform_interface:
+    dependency: transitive
+    description:
+      name: flutter_local_notifications_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   flutter_rating_bar:
     dependency: "direct main"
     description:
@@ -542,7 +563,7 @@ packages:
     source: hosted
     version: "3.0.13"
   provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: provider
       url: "https://pub.dartlang.org"

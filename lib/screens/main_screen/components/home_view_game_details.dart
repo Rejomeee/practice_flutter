@@ -3,7 +3,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:igdb_app/models/game/game.dart';
-import 'package:igdb_app/widgets/chip_badge_widget.dart';
+import 'package:igdb_app/elements/chip_badge_element.dart';
 import 'package:intl/intl.dart';
 
 class HomeViewGameDetailsScreen extends StatefulWidget {
@@ -180,7 +180,7 @@ class _HomeViewGameDetailsScreenState extends State<HomeViewGameDetailsScreen> {
                                           ),
                                           SizedBox(height: 2),
                                           Text(
-                                            '${game.rating_count} Votes'
+                                            '${game.ratingCount} Votes'
                                                 .toUpperCase(),
                                             style: TextStyle(
                                                 color: Colors.white

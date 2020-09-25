@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'package:igdb_app/repository/Api/getAuthToken.dart';
-// import 'package:igdb_app/services/router/router.gr.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:igdb_app/models/app/app_models/login_auth_response.dart';
+import 'package:igdb_app/repository/Api/loginCredentials.dart';
 import 'package:igdb_app/utils/validators/validators.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:igdb_app/services/shared_preferences.dart';
-import 'package:igdb_app/utils/constant/constants.dart';
 
 class AuthBloc with Validators {
   final _emailController = BehaviorSubject<String>();
@@ -24,25 +24,19 @@ class AuthBloc with Validators {
   Stream<bool> get submitCheck =>
       CombineLatestStream.combine2(email, password, (e, p) => true);
 
-  Future<bool> submit() async {
+  Future<LoginAuthResponse> submit() async {
     _isLoadingController.sink.add(true);
-    UserPreferences _prefs = UserPreferences();
-    await _prefs.setData('userLogged', 'logged');
-    print('di');
-    print(await _prefs.getData('di'));
-    print('dt');
-    print(await _prefs.getData('dt'));
-    print(httpOptions);
-    await Future.delayed(Duration(seconds: 5));
-    print('submit bloc');
+    LoginAuthResponse loginAuthResponse = await loginCredentials(
+        _emailController.value, _passwordController.value);
     _isLoadingController.sink.add(false);
-    return true;
+    return loginAuthResponse;
   }
 
   void logOut() async {
     UserPreferences _prefs = UserPreferences();
     await _prefs.removeData('userLogged');
     print('logged out');
+    ExtendedNavigator.root.pushAndRemoveUntil('/', (route) => false);
   }
 
   void toggleObscure(bool toggle) =>

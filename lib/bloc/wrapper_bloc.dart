@@ -31,15 +31,11 @@ class WrapperBloc {
     String isLogged = await _prefs.getData('userLogged');
     // if (await _prefs.getData('dt') == '' && await _prefs.getData('di') == '')
     // getAuthToken()
-    PushNotificationsManager().init();
+    await PushNotificationsManager().init();
 
     if (isLogged != '')
       showHome();
-    // Router.navigatorKey.currentState.popAndPushNamed('/home');
-    // Router.navigatorKey.currentState.pushReplacementNamed("/home");
     else
-      // Router.navigatorKey.currentState.popAndPushNamed('/login');
-      // Router.navigatorKey.currentState.pushReplacementNamed("/login");
       showLogin();
   }
 

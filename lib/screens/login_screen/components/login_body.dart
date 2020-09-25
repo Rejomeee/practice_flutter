@@ -4,6 +4,8 @@ import 'package:igdb_app/bloc/auth_bloc.dart';
 import 'package:igdb_app/elements/rounded_buttons.dart';
 import 'package:igdb_app/elements/rounded_input_field.dart';
 import 'package:igdb_app/elements/rounded_password_field.dart';
+import 'package:igdb_app/models/app/app_models/login_auth_response.dart';
+import 'package:igdb_app/repository/Api/getAuthToken.dart';
 import 'package:igdb_app/screens/login_screen/components/login_bg.dart';
 import 'package:igdb_app/screens/main_screen/main_screen.dart';
 // import 'package:igdb_app/services/router/router.gr.dart';
@@ -21,6 +23,7 @@ class _LoginBodyState extends State<LoginBody> {
   void initState() {
     super.initState();
     _loginBloc = AuthBloc();
+    getAuthToken();
   }
 
   @override
@@ -47,6 +50,7 @@ class _LoginBodyState extends State<LoginBody> {
                   stream: loginBloc.email,
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     return RoundedInputField(
+                      keyboardType: TextInputType.emailAddress,
                       onSaved: (emailValue) =>
                           loginBloc.emailChanged.add(emailValue),
                       onChanged: (emailValue) =>
@@ -111,10 +115,16 @@ class _LoginBodyState extends State<LoginBody> {
                           text: isLoadingSnapshot.data ? 'loading...' : 'LOGIN',
                           press: () {
                             loginBloc
-                              ..submit().then(
-                                (value) => ExtendedNavigator.root
-                                    .popAndPush('/main-screen'),
-                              );
+                              ..submit().then((res) {
+                                LoginAuthResponse response = res;
+                                if (response.error == 0) {
+                                  ExtendedNavigator.root
+                                      .popAndPush('/main-screen');
+                                } else {
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text('${response.message}')));
+                                }
+                              });
                           },
                           // if email and password is true OR loading is false
                           disableButton:

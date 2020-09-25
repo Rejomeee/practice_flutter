@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:igdb_app/repository/dio_connectivity_request_retrier.dart';
 
 class RetryOnConnectionChangeInterceptor extends Interceptor {
@@ -15,10 +16,14 @@ class RetryOnConnectionChangeInterceptor extends Interceptor {
       try {
         return requestRetrier.scheduleRequestRetry(err.request);
       } catch (e) {
+        print('e:');
+        print(e);
         return e;
       }
     }
     // Let the error "pass through" if it's not the error we're looking for
+    print('err:');
+    print(err);
     return err;
   }
 

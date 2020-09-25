@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:igdb_app/bloc/wrapper_bloc.dart';
 import 'package:igdb_app/elements/loader_element.dart';
+import 'package:igdb_app/repository/Api/getAuthToken.dart';
 import 'package:igdb_app/repository/dio_connectivity_request_retrier.dart';
 import 'package:igdb_app/repository/retry_interceptor.dart';
 import 'package:igdb_app/screens/login_screen/login_screen.dart';
@@ -32,7 +33,6 @@ class _WrapperScreenState extends State<WrapperScreen> {
     print('build wrapper');
     return StreamBuilder<WrapperItem>(
       stream: _wrapperBloc.itemStream,
-      initialData: _wrapperBloc.defaultItem,
       builder: (BuildContext context, AsyncSnapshot<WrapperItem> snapshot) {
         switch (snapshot.data) {
           case WrapperItem.HOME:

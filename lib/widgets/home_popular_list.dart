@@ -53,10 +53,11 @@ class _HomePopularListState extends State<HomePopularList> {
           itemCount: games.length,
           itemBuilder: (BuildContext context, int index) {
             return AnimationConfiguration.staggeredList(
+              delay: Duration(milliseconds: 350),
               position: index,
-              duration: Duration(milliseconds: 375),
+              duration: Duration(milliseconds: 600),
               child: SlideAnimation(
-                verticalOffset: 50.0,
+                verticalOffset: -50.0,
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 20.0,
@@ -65,14 +66,6 @@ class _HomePopularListState extends State<HomePopularList> {
                     onTap: () {
                       print(games[index].screenshots[0].imageId);
                       getGamesBloc..clickedGame(games[index]);
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => HomeViewGameDetailsScreen(
-                      //       game: games[index],
-                      //     ),
-                      //   ),
-                      // );
                     },
                     child: Container(
                       width: 120,

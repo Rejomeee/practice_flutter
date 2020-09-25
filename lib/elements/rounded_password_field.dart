@@ -31,6 +31,7 @@ class RoundedPasswordField extends StatelessWidget {
     return TextFieldContainer(
       hasError: hasError,
       child: TextFormField(
+        keyboardType: TextInputType.visiblePassword,
         obscureText: passVisible,
         onSaved: onSaved,
         validator: validator,

@@ -20,7 +20,7 @@ class GameModel {
   final String summary;
   final List<VideoModel> videos;
   final double rating;
-  final int rating_count;
+  final int ratingCount;
   final String name;
   final String storyline;
 
@@ -38,7 +38,7 @@ class GameModel {
     this.videos,
     this.rating,
     this.name,
-    this.rating_count,
+    this.ratingCount,
     this.keywords,
     this.storyline,
   );
@@ -76,7 +76,7 @@ class GameModel {
     }
     data['rating'] = rating;
     data['name'] = name;
-    data['rating_count'] = rating_count;
+    data['rating_count'] = ratingCount;
     data['keywords'] = keywords;
     data['storyline'] = storyline;
     return data;
@@ -119,7 +119,7 @@ class GameModel {
                 .map((i) => VideoModel.fromJson(i))
                 .toList(),
         rating = json["rating"],
-        rating_count = json["rating_count"],
+        ratingCount = json["rating_count"],
         name = json['name'],
         storyline = json['storyline'];
 }

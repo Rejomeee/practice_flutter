@@ -43,17 +43,14 @@ class MyApp extends StatelessWidget {
         //   visualDensity: VisualDensity.adaptivePlatformDensity,
         // ),
         builder: ExtendedNavigator.builder(
+          navigatorKey: _navigatorKey,
           router: Router(),
           builder: (context, extendedNav) => Theme(
             data: ThemeData.light(),
             child: extendedNav,
           ),
         ),
-        // home: WrapperScreen(),
         onGenerateRoute: Router(),
-        // initialRoute: '/',
-        // onGenerateRoute: (settings) => Router.onGenerateRoute(settings),
-        // initialRoute: "/wrapper",
       ),
     );
   }

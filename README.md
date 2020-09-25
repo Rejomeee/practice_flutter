@@ -26,4 +26,4 @@ Read:
 
 
 Commands: 
-- flutter pub run build_runner watch --delete-conflicting-outputs
+- flutter pub run build_runner watch --delete-conflicting-outputs (use for auto generate routing)

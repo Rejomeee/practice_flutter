@@ -53,10 +53,10 @@ mixin Validators {
               ? error += 'Must contain: 1 numeric'
               : error += ', 1 numeric';
 
-        if (!hasSpecialCharacters)
-          error == ''
-              ? error += 'Must contain: 1 special character.'
-              : error += ', 1 special character.';
+        // if (!hasSpecialCharacters)
+        //   error == ''
+        //       ? error += 'Must contain: 1 special character.'
+        //       : error += ', 1 special character.';
       }
 
       if (error == '')
